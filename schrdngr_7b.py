@@ -1,3 +1,5 @@
+#Integration der Klein-Gordon-Gleichung
+
 # import
 
 import numpy as np
@@ -25,8 +27,6 @@ H0 = 67.7 # H(a=1) unit: km/sMpc
 H0_SI = H0*1e-3/pc
 L_H = c/H0_SI #Hubble Länge
 
-
-#print(pc)
 print('H0 = %.4e s^-1' %H0_SI)
 print('Hubble-Länge = %.4e' %L_H)
 
@@ -37,21 +37,19 @@ def b(x):
     #return H0_SI*(1+1e10*x)
     return H0_SI
 
-
-#print(k2, k)
-
+#integration Klein-Gordon
 def fkt(y, x):
     
     k2 = c**2 * n*(n+2)/ b(x)**2 -1
     k = k2**0.5
     
     w, u = y
-    R = L_H*(1+x+1*x**2)# 
+    R = L_H*(1+x+1*x**2)
     
     #z = 1+b*x
     z = my*R*c/b(x)
     dwdz = u
-    dudz = -1/z*u - (1+k**2/z**2)*w#sind u und w auch von 
+    dudz = -1/z*u - (1+k**2/z**2)*w
 
     
     dydz = [dwdz, dudz]
@@ -59,17 +57,16 @@ def fkt(y, x):
 
 
 
-z_lst = np.linspace(0,10,1000) #
+z_lst = np.linspace(0,10,1000) 
 y0 = [0, 1] 
 
 sol = odeint(fkt, y0, z_lst)
-#print(sol)
 
-plt.plot(z_lst, sol[:, 0], label = 'w_r') #subplts benutzen
+plt.plot(z_lst, sol[:, 0], label = 'w_r') 
 plt.plot(z_lst, sol[:, 0].imag, label = 'w_i') #imaginärteil von z-schlange 
 #plt.plot(z_lst, sol[:, 1], label = 'u')
 plt.legend()
-plt.xlabel('z~')#bzw z-schlange
+plt.xlabel('z~')
 plt.ylabel('w')
 plt.show()         
 

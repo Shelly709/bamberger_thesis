@@ -1,3 +1,5 @@
+#Integration der d'Alembertgleichung
+
 # import
 
 import numpy as np
@@ -26,7 +28,6 @@ H0_SI = H0*1e-3/pc
 L_H = c/H0_SI #Hubble Länge
 
 
-#print(pc)
 print('H0 = %.4e s^-1' %H0_SI)
 print('Hubble-Länge = %.4e' %L_H)
 
@@ -38,16 +39,14 @@ ny2 = (H0_SI*R/c)**4 * n*(n+2)  #+ (H0/c)**4 * my**2 * R**6 #passt etwa von der 
 
 #ny2 = H0**2 * R**4 * c**(-1) * n*(n+2)  + H0**2 * c**(-1) * my**2 * R**6
 #ny2 = (H0*R/c)**4 * n*(n+2)  * my**(-2)+ (H0/c)**4  * R**6
-#ny
 
 # ny1 = R**3 *c *(2*pi)**(-1) * (n*(n+2)/R**2 + my)**(-0.5)# aus skript Gl.11
-# print(ny1**-1)
-print(ny2**-0.5) # kehrwert
+
+print(ny2**-0.5) # kehrwert von ny
 print(R)
 print(n*(n+2))
 
-#z = c**3 * H0**(-2) * R**(-3)# z ist tau-schlange
-#print(z)
+#z = c**3 * H0**(-2) * R**(-3) # z ist tau-schlange
     
 # DGL (tau_schlange)
 
@@ -60,14 +59,14 @@ def fkt(y, z):
     return dydz
 
 
-#z_lst = np.linspace(0,1e61,10)
+
 z_lst = np.linspace(0,10,1000)
-y0 = [0, 1] #evtl umdrehen
+y0 = [0, 1]
 
+#Lsg der DGL
 sol = odeint(fkt, y0, z_lst)
-#print(sol)
 
-plt.plot(z_lst, sol[:, 0], label = 'f_r') #subplts benutzen
+plt.plot(z_lst, sol[:, 0], label = 'f_r') 
 #plt.plot(z_lst, sol[:, 0].imag, label = 'f_i')
 #plt.plot(z_lst, sol[:, 1], label = 'u')
 plt.legend()

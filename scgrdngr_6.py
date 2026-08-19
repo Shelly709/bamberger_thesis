@@ -1,3 +1,5 @@
+#Integration der Klein-Gordon-Gleichung
+
 # import
 
 import numpy as np
@@ -20,15 +22,11 @@ pc = 1.029e8*c
 
 ############################
 my = 10e12 # Grössenordnung 1/Compton 
-n =  1#1e38# Grössenordnung? extrem gross
+n =  1e38# Grössenordnung? extrem gross
 H0 = 67.7 # H(a=1) unit: km/sMpc
 H0_SI = H0*1e-3/pc
 L_H = c/H0_SI #Hubble Länge
 
-
-#print(pc)
-print('H0 = %.4e s^-1' %H0_SI)
-print('Hubble-Länge = %.4e' %L_H)
 
 ###############################
 #R = L_H*(1+z)
@@ -37,6 +35,8 @@ k2 = c**2 * n*(n+2)/ b**2 -1
 k = k2**0.5
 print(k2, k)
 
+#DGL
+#Klein-Gordon
 def fkt(y, x):
     w, u = y
     R = L_H*(1+x)
@@ -50,12 +50,12 @@ def fkt(y, x):
     return dydz
 
 
-#z_lst = np.linspace(0,1e61,10)
 z_lst = np.linspace(0,10,1000) #nicht bei 0 beginnen --> division by zero
 y0 = [0, 1] 
 
+#Lsg integration der DGL
 sol = odeint(fkt, y0, z_lst)
-#print(sol)
+
 
 plt.plot(z_lst, sol[:, 0], label = 'w_r') #subplts benutzen
 plt.plot(z_lst, sol[:, 0].imag, label = 'w_i')

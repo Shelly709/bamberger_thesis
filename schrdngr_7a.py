@@ -1,3 +1,5 @@
+#Integration der Klein-Gordon-Gleichung
+
 # import
 
 import numpy as np
@@ -40,33 +42,34 @@ def b(x):
 
 #print(k2, k)
 
+#DGL
+#Klein-Gordon
 def fkt(y, x):
     
     k2 = c**2 * n*(n+2)/ b(x)**2 -1
     k = k2**0.5
     
     w, u = y
-    R = L_H*(1+x+1*x**2)#bis 88 funktionierts aber schon bei 88.1 gibt es ein overflow o.ä. jedenfalls bei der wurzel.
-    #beiquadrat funktionierts bis 86
+    R = L_H*(1+x+1*x**2)
     
     #z = 1+b*x
     z = my*R*c/b(x)
     dwdz = u
-    dudz = -1/z*u - (1+k**2/z**2)*w#sind u und w auch von 
+    dudz = -1/z*u - (1+k**2/z**2)*w
 
     
     dydz = [dwdz, dudz]
     return dydz
 
 
-#z_lst = np.linspace(0,1e61,10)
-z_lst = np.linspace(0,10,1000) #nicht bei 0 beginnen --> division by zero
+z_lst = np.linspace(0,10,1000) 
 y0 = [0, 1] 
 
+#Lsg der integration der DGL
 sol = odeint(fkt, y0, z_lst)
-#print(sol)
 
-plt.plot(z_lst, sol[:, 0], label = 'w_r') #subplts benutzen
+
+plt.plot(z_lst, sol[:, 0], label = 'w_r') 
 plt.plot(z_lst, sol[:, 0].imag, label = 'w_i') #imaginärteil von z-schlange 
 #plt.plot(z_lst, sol[:, 1], label = 'u')
 plt.legend()

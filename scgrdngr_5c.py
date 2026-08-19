@@ -1,3 +1,5 @@
+#Integration der d'Alembertgleichung
+
 # import
 
 import numpy as np
@@ -20,15 +22,11 @@ pc = 1.029e8*c
 
 ############################
 my = 0#10e12 # Grössenordnung 1/Compton 
-n =1 #1e38# Grössenordnung? extrem gross
+n = 1 #1e38# Grössenordnung? extrem gross
 H0 = 67.7 # H(a=1) unit: km/sMpc
 H0_SI = H0*1e-3/pc
 L_H = c/H0_SI #Hubble Länge
 
-
-#print(pc)
-print('H0 = %.4e s^-1' %H0_SI)
-print('Hubble-Länge = %.4e' %L_H)
 
 ###############################
 #R = L_H*(1+z)
@@ -41,16 +39,11 @@ print('Hubble-Länge = %.4e' %L_H)
 #ny
 
 # ny1 = R**3 *c *(2*pi)**(-1) * (n*(n+2)/R**2 + my)**(-0.5)# aus skript Gl.11
-# print(ny1**-1)
-#print(ny2**-0.5) # kehrwert
-#print(R)
-print(n*(n+2))
 
 #z = c**3 * H0**(-2) * R**(-3)# z ist tau-schlange
-#print(z)
     
 # DGL (tau_schlange=z)
-
+#d'alembert
 def fkt(y, z):
     f, u = y
     R = L_H
@@ -69,7 +62,7 @@ def fkt(y, z):
 
 #z_lst = np.linspace(0,1e61,10)
 z_lst = np.linspace(0,10,1000)
-y0 = [0, 1] #evtl umdrehen --> umdrehen geht nicht!
+y0 = [0, 1]
 
 sol = odeint(fkt, y0, z_lst)
 #print(sol)
